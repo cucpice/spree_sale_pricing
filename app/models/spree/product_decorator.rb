@@ -8,8 +8,8 @@ Spree::Product.class_eval do
 
 
   # TODO also accept a class reference for calculator type instead of only a string
-  def put_on_sale(value, calculator_type = "Spree::Calculator::DollarAmountSalePriceCalculator", all_variants = true, start_at = Time.now, end_at = nil, enabled = true)
-    run_on_variants(all_variants) { |v| v.put_on_sale(value, calculator_type, true, start_at, end_at, enabled) }
+  def put_on_sale(value, all_variants = true, **options)
+    run_on_variants(all_variants) { |v| v.put_on_sale(value, options) }
   end
   alias :create_sale :put_on_sale
 
