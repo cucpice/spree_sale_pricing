@@ -12,7 +12,7 @@ module Spree
 
       # Create a new sale price
       def create
-        @sale_price = @variant.put_on_sale(sale_price_params[:value], sale_price_params[:start_at], sale_price_params[:end_at])
+        @sale_price = @variant.put_on_sale(sale_price_params[:value], start_at: sale_price_params[:start_at], end_at: sale_price_params[:end_at])
         logger.debug @sale_price.inspect
         respond_with(@sale_price)
       end
@@ -30,7 +30,11 @@ module Spree
       # Load the variant as a before filter. Redirect to the referer if no product is found
       def load_product_and_variant
         @product = Spree::Product.find_by(slug: params[:product_id])
-        @variant = @product.variants_including_master.find(params[:variant_id])
+        if params.has_key?(:variant_id)
+          @variant = @product.variants_including_master.find(params[:variant_id])
+        else
+          @variant = @product.master
+        end
         redirect_to request.referer unless @variant
       end
 

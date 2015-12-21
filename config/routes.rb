@@ -4,6 +4,7 @@ Spree::Core::Engine.routes.draw do
       resources :variants do
         resources :sale_prices
       end
+      resources :sale_prices
     end
   end
 end
