@@ -40,11 +40,20 @@ module Spree
 
       # Sale price params
       def sale_price_params
-        params.require(:sale_price).permit(:id, :value, :start_at, :end_at, :enabled)
+        p = params.require(:sale_price).permit(:id, :value, :start_at, :end_at, :enabled)
+        #  normalize param
+        p[:start_at] = DateTime.strptime(p[:start_at], date_time_format)
+        p[:end_at] = DateTime.strptime(p[:end_at], date_time_format)
+        p
       end
 
       def update_product
         @product.touch
+      end
+
+      # TODO:- date time format to be inherit from spree
+      def date_time_format
+        '%d/%m/%Y %H:%M'
       end
 
     end

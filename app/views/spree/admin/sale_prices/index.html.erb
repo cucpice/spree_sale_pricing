@@ -21,11 +21,11 @@
         </div>
         <div class='columns three'>
           <%= f.label :start_at %>
-          <%= f.text_field :start_at, class: "datepicker" %>
+          <%= f.text_field :start_at, class: "datetimepicker" %>
         </div>
         <div class='columns three'>
           <%= f.label :end_at %>
-          <%= f.text_field :end_at, class: "datepicker" %>
+          <%= f.text_field :end_at, class: "datetimepicker" %>
         </div>
         <div class='columns two'>
           <%= f.label :submit, style: 'visibility: hidden;' %>
@@ -40,3 +40,12 @@
 <div id='product-sale-prices-table'>
   <%= render partial: 'spree/admin/sale_prices/table', locals: { product: @product } %>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $('.datetimepicker').datetimepicker({
+        dateFormat: 'dd/mm/yy',
+        timeFormat: 'H:mm'
+      });
+    });
+</script>
