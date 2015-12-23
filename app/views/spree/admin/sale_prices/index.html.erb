@@ -42,10 +42,12 @@
 </div>
 
 <script>
+    <%# TODO:- move this code to some .js file %>
     $(document).ready(function(){
       $('.datetimepicker').datetimepicker({
         dateFormat: 'dd/mm/yy',
-        timeFormat: 'H:mm'
+        timeFormat: 'H:mm',
+        timeInput: true
       });
     });
 </script>
