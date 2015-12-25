@@ -30,6 +30,16 @@ Deface::Override.new({
   disabled: false
 })
 
+Deface::Override.new({
+   virtual_path: "spree/admin/products/_form",
+   name: "add_show_original_price_on_product_form",
+   # replace_contents: "[data-hook='admin_product_form_price']",
+   # partial: 'spree/admin/products/sale_price',
+   # disabled: false
+   replace: '@product.price',
+   text: '@product.original_price'
+})
+
 # Deface::Override.new({
 #   virtual_path: "spree/admin/variants/_form",
 #   name: "add_on_sale_to_variant_form",
