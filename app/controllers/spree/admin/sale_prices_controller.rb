@@ -53,7 +53,7 @@ module Spree
 
       # TODO:- date time format to be inherit from spree
       def date_time_format
-        '%d/%m/%Y %H:%M'
+        Spree::t(:rb_format, scope: 'date_time_picker', default: '%Y/%m/%d %H:%M')
       end
 
     end

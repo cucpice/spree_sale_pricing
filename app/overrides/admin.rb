@@ -22,13 +22,13 @@
 # })
 
 
-# Deface::Override.new({
-#   virtual_path: "spree/admin/products/_form",
-#   name: "add_on_sale_to_product_form",
-#   insert_bottom: "[data-hook='admin_product_form_price']",
-#   text: '<% if @product.on_sale? %><strong><%= "(On sale for #{@product.display_price})" %></strong><% end %>',
-#   disabled: false
-# })
+Deface::Override.new({
+  virtual_path: "spree/admin/products/_form",
+  name: "add_on_sale_to_product_form",
+  insert_bottom: "[data-hook='admin_product_form_price']",
+  partial: 'spree/admin/products/sale_price',
+  disabled: false
+})
 
 # Deface::Override.new({
 #   virtual_path: "spree/admin/variants/_form",

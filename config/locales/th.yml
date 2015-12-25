@@ -1,0 +1,10 @@
+th:
+  sale_price: "ราคาลด"
+  original_price: "ราคาเดิม"
+  sale_prices: "ราคาลด"
+  add_sale_prices: "เพิ่มราคาลด"
+  sale_price_start_at: "ลดราคามีผลเมื่อ"
+  sale_price_end_at: "ลดราคาสิ้นสุดเมื่อ"
+  sale_price_enabled: "มีผลอยู่"
+  spree:
+    percent_per_item_msrp: "Percent per item MSRP"
