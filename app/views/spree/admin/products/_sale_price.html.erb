@@ -5,7 +5,7 @@
             <%= f.text_field :sale_price, :value => @product.sale_price, :disabled => true %>
             <%= f.error_message_on :sale_price %>
         <% end %>
-        <%= link_to t(:add_sale_prices), admin_product_sale_prices_path(@product), class: 'button' %>
+        <%= link_to t(:manage_sale_prices), admin_product_sale_prices_path(@product), class: 'button' %>
     </div>
 <% end %>
 
