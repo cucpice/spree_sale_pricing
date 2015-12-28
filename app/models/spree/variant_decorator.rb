@@ -24,7 +24,9 @@ Spree::Variant.class_eval do
   alias :next_current_sale_in :next_active_sale_in
 
   def sale_price_in(currency)
-    Spree::Price.new variant_id: self.id, currency: currency, amount: price_in(currency).sale_price
+    # old method using spree::price instead of sale_price objects
+    # Spree::Price.new variant_id: self.id, currency: currency, amount: price_in(currency).sale_price
+    price_in(currency).sale_prices
   end
 
   # Returns true if the product is discounted by an amount that rounds to at least 1%

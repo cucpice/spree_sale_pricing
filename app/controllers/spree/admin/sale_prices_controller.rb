@@ -7,7 +7,7 @@ module Spree
 
       def index
         @sale_price = Spree::SalePrice.new
-        @sale_prices = @variant.sale_prices
+        @sale_prices = @variant.sale_price_in(@currency)
       end
 
       # Create a new sale price
@@ -35,6 +35,7 @@ module Spree
         else
           @variant = @product.master
         end
+        @currency = Spree::Config[:currency] || 'USD'
         redirect_to request.referer unless @variant
       end
 
