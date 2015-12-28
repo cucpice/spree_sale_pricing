@@ -11,3 +11,6 @@ en:
   sale_price_enabled: "Enabled"
   spree:
     percent_per_item_msrp: "Percent per item MSRP"
+  time:
+    formats:
+      admin: "%Y/%m/%d %H:%M"

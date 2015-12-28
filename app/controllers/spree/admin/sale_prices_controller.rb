@@ -10,6 +10,21 @@ module Spree
         @sale_prices = @variant.sale_price_in(@currency)
       end
 
+      def show
+        redirect_to action: :edit
+      end
+
+      def edit
+        @sale_price = Spree::SalePrice.find(params[:id])
+      end
+
+      def update
+        @sale_price = Spree::SalePrice.find(params[:id])
+        @sale_price.update sale_price_params.except(:id)
+        # flash[:success] = flash_message_for(@sale_price, :successfully_updated)
+        redirect_to action: :index
+      end
+
       # Create a new sale price
       def create
         @sale_price = @variant.put_on_sale(sale_price_params[:value], start_at: sale_price_params[:start_at], end_at: sale_price_params[:end_at])

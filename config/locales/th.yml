@@ -10,3 +10,6 @@ th:
   until: "จนถึง"
   spree:
     percent_per_item_msrp: "Percent per item MSRP"
+  time:
+    formats:
+      admin: "%d/%m/%Y %H:%M"

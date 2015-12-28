@@ -5,6 +5,7 @@
     <td><%=l sale_price.end_at ,format: :long%></td>
     <td><%= sale_price.enabled %></td>
     <td class="actions" data-hook="admin_sale_prices_index_row_actions">
+        <%= link_to_edit sale_price, :url => admin_product_variant_sale_price_path(@product, @variant, sale_price), :no_text => true %>
         <%= link_to_delete sale_price, :url => admin_product_variant_sale_price_path(@product, @variant, sale_price), :no_text => true %>
     </td>
 </tr>

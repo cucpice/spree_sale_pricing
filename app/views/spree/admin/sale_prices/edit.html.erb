@@ -7,7 +7,7 @@
   <fieldset>
     <legend align="center"><%= Spree.t('sale_prices') %></legend>
 
-    <%= form_for [:admin, @product, @variant, @sale_price], remote: true do |f| %>
+    <%= form_for [:admin, @product, @variant, @sale_price] do |f| %>
       <div class='row'>
         <div class='columns three'>
           <%= label_tag 'Original Price' %>
@@ -22,26 +22,28 @@
         </div>
         <div class='columns three'>
           <%= f.label :start_at %>
-          <%= f.text_field :start_at, class: "datetimepicker" %>
+          <%= f.text_field :start_at, class: "datetimepicker" ,value: Spree.l(@sale_price.start_at, format: :admin)%>
             <%= f.error_message_on :start_at %>
         </div>
         <div class='columns three'>
           <%= f.label :end_at %>
-          <%= f.text_field :end_at, class: "datetimepicker" %>
+          <%= f.text_field :end_at, class: "datetimepicker" ,value: Spree.l(@sale_price.end_at, format: :admin)%>
             <%= f.error_message_on :end_at %>
         </div>
-        <div class='columns two'>
-          <%= f.label :submit, style: 'visibility: hidden;' %>
-          <%= f.submit "Add Sale Price" %>
+        <div class="columns two">
+            <%= f.label :enabled %>
+            <%= f.check_box :enabled %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="columns six">
+                <%= f.label :submit, style: 'visibility: hidden;' %>
+                <%= f.submit "Update" %>
         </div>
       </div>
     <% end %>
 
   </fieldset>
-</div>
-
-<div id='product-sale-prices-table'>
-  <%= render partial: 'spree/admin/sale_prices/table', locals: { product: @product } %>
 </div>
 
 <script>
