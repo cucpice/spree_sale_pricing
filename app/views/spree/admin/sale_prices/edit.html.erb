@@ -1,0 +1,56 @@
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+<%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => "Variants"} %>
+
+<%= csrf_meta_tag %>
+
+<div id='add-line-item'>
+  <fieldset>
+    <legend align="center"><%= Spree.t('sale_prices') %></legend>
+
+    <%= form_for [:admin, @product, @variant, @sale_price], remote: true do |f| %>
+      <div class='row'>
+        <div class='columns three'>
+          <%= label_tag 'Original Price' %>
+          <%= text_field_tag '', @variant.original_price.to_f, disabled: true %>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='columns three'>
+          <%= f.label :value, "Sale Price Amount" %>
+          <%= f.text_field :value, required: true %>
+          <%= f.error_message_on :value %>
+        </div>
+        <div class='columns three'>
+          <%= f.label :start_at %>
+          <%= f.text_field :start_at, class: "datetimepicker" %>
+            <%= f.error_message_on :start_at %>
+        </div>
+        <div class='columns three'>
+          <%= f.label :end_at %>
+          <%= f.text_field :end_at, class: "datetimepicker" %>
+            <%= f.error_message_on :end_at %>
+        </div>
+        <div class='columns two'>
+          <%= f.label :submit, style: 'visibility: hidden;' %>
+          <%= f.submit "Add Sale Price" %>
+        </div>
+      </div>
+    <% end %>
+
+  </fieldset>
+</div>
+
+<div id='product-sale-prices-table'>
+  <%= render partial: 'spree/admin/sale_prices/table', locals: { product: @product } %>
+</div>
+
+<script>
+    <%# TODO:- move this code to some .js file %>
+    $(document).ready(function(){
+      $('.datetimepicker').datetimepicker({
+        dateFormat: Spree.translations.date_picker,
+        timeFormat: 'H:mm',
+        timeInput: true
+      });
+    });
+</script>
