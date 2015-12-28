@@ -5,6 +5,7 @@ module Spree
     has_one :calculator, :class_name => "Spree::Calculator", :as => :calculable, :dependent => :destroy
     accepts_nested_attributes_for :calculator
     validates :calculator, :presence => true
+    validates :price, presence: true, numericality: {greater_than_or_equal_to: 0}
 
     #attr_accessible :value, :start_at, :end_at, :enabled
 
