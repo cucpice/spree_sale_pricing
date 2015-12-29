@@ -7,6 +7,9 @@ module Spree
     validates :calculator, :presence => true
     validates :value, presence: true, numericality: {greater_than_or_equal_to: 0}
 
+    extend DisplayMoney
+    money_methods :price
+
     #attr_accessible :value, :start_at, :end_at, :enabled
 
     scope :active, lambda {
@@ -37,6 +40,10 @@ module Spree
 
     def disable
       update_attribute(:enabled, false)
+    end
+
+    def currency
+      Price.find(price_id).currency
     end
 
     def start(end_time = nil)

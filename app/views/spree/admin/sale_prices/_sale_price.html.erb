@@ -1,6 +1,6 @@
 <tr data-hook="products_row" id="<%= spree_dom_id(sale_price) %>" class="spree-product-sale-price">
     <td><%= active_for_sale_price(product, sale_price) ? 'Yes' : '' %></td>
-    <td><%= sale_price.price %> (<%= @currency %>)</td>
+    <td><%= sale_price.display_price %> (<%= @currency %>)</td>
     <td><%=l sale_price.start_at ,format: :long%></td>
     <td><%=l sale_price.end_at ,format: :long%></td>
     <td><%= sale_price.enabled %></td>
