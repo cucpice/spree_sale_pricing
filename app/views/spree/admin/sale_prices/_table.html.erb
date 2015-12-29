@@ -21,7 +21,7 @@
   </thead>
 
   <tbody>
-    <%= render partial: "spree/admin/sale_prices/sale_price", collection: @sale_prices, locals: { product: product } %>
+    <%= render partial: "spree/admin/sale_prices/sale_price", collection: @variant.sale_prices, locals: { product: product } %>
   </tbody>
 
 </table>
