@@ -1,3 +1,10 @@
+Deface::Override.new({
+    virtual_path: 'spree/admin/products/index',
+    name: 'add_sale_prices_to_products_index',
+    replace_contents: '[data-hook="admin_products_index_rows"] td:nth-last-child(2)',
+    partial: 'spree/admin/products/sale_price_at_products_index'
+})
+
 # Deface::Override.new({
 #   virtual_path: "spree/admin/variants/index",
 #   name: "add_sale_prices_button_to_variants_index",
@@ -11,7 +18,7 @@
 #   :virtual_path => "spree/admin/variants/index",
 #   :name => "add_msrp_to_variant_index_header",
 #   :replace_contents => "[data-hook='variants_header']",
-#   :partial => "spree/admin/variants/variants_header"
+#   :partial => "spree/admin/variavvnts/variants_header"
 # })
 #
 # Deface::Override.new({
@@ -46,13 +53,13 @@ Deface::Override.new({
 #   disabled: false
 # })
 
-Deface::Override.new({
-  virtual_path: "spree/admin/products/new",
-  name: "add_msrp_to_new_product",
-  replace_contents: "[data-hook='new_product_attrs']",
-  partial: "spree/admin/products/new_product_attrs",
-  disabled: false
-})
+# Deface::Override.new({
+#   virtual_path: "spree/admin/products/new",
+#   name: "add_msrp_to_new_product",
+#   replace_contents: "[data-hook='new_product_attrs']",
+#   partial: "spree/admin/products/new_product_attrs",
+#   disabled: false
+# })
 
 # Deface::Override.new({
 #   :virtual_path => "spree/admin/variants/_form",
