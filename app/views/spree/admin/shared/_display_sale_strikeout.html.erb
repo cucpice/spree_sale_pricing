@@ -1,0 +1,6 @@
+<%# obj can be either variant or product %>
+<% if obj.on_sale? %>
+    <span><s><%= obj.display_original_price.to_html rescue '' %></s></span> <span><%= obj.display_price.to_html rescue '' %></span>
+<% else %>
+    <%= obj.display_price.to_html rescue '' %>
+<% end %>

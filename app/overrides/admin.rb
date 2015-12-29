@@ -2,25 +2,26 @@ Deface::Override.new({
     virtual_path: 'spree/admin/products/index',
     name: 'add_sale_prices_to_products_index',
     replace_contents: '[data-hook="admin_products_index_rows"] td:nth-last-child(2)',
-    partial: 'spree/admin/products/sale_price_at_products_index'
+    text: "<%= render partial: 'spree/admin/shared/display_sale_strikeout', locals: {obj: product} %>"
 })
 
-# Deface::Override.new({
-#   virtual_path: "spree/admin/variants/index",
-#   name: "add_sale_prices_button_to_variants_index",
-#   insert_before: "td.actions",
-#   text: '<%= link_to_with_icon("usd", "", admin_variant_sale_prices_path(@variant), { no_text: true )} %>',
-#   original: '856e87261a419d5b5bc0a734f2ec481c4c2fe0f7',
-#   disabled: false
-# })
+Deface::Override.new({
+  virtual_path: "spree/admin/variants/index",
+  name: "add_sale_prices_button_to_variants_index",
+  insert_top: "td.actions",
+  text: '<%= link_to_with_icon("usd", t(:manage_sale_prices), admin_product_variant_sale_prices_path(@product, variant), { no_text: true }) %>',
+  original: '856e87261a419d5b5bc0a734f2ec481c4c2fe0f7',
+  disabled: false
+})
 
-# Deface::Override.new({
-#   :virtual_path => "spree/admin/variants/index",
-#   :name => "add_msrp_to_variant_index_header",
-#   :replace_contents => "[data-hook='variants_header']",
-#   :partial => "spree/admin/variavvnts/variants_header"
-# })
-#
+Deface::Override.new({
+     virtual_path: 'spree/admin/variants/index',
+     name: 'add_sale_prices_to_variants_index',
+     replace_contents: '[data-hook="variants_row"] td:nth-last-child(3)',
+     text: "<%= render partial: 'spree/admin/shared/display_sale_strikeout', locals: {obj: variant} %>"
+ })
+
+
 # Deface::Override.new({
 #   :virtual_path => "spree/admin/variants/index",
 #   :name => "add_msrp_to_variant_index_row",

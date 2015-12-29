@@ -1,5 +1,0 @@
-<% if product.on_sale? %>
-    <span><s><%= product.display_original_price.to_html rescue '' %></s></span> <span><%= product.display_price.to_html rescue '' %></span>
-<% else %>
-    <%= product.display_price.to_html rescue '' %>
-<% end %>
