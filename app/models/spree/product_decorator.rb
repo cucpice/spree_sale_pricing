@@ -31,12 +31,26 @@ Spree::Product.class_eval do
 
   add_search_scope :on_sale_items do
     joins(:master => :default_price).
-    joins("INNER JOIN #{Spree::SalePrice.table_name} ON #{Spree::Price.table_name}.id = #{Spree::SalePrice.table_name}.price_id")
+    joins("INNER JOIN (#{Spree::SalePrice.active.to_sql}) sale_prices ON #{Spree::Price.table_name}.id = sale_prices.price_id")
     # joins(:prices, :sale_prices).merge(Spree::SalePrice.active)
     # joins("INNER JOIN (
     #           #{Spree::Variant.joins(:prices, :sale_prices).merge(Spree::SalePrice.active).to_sql}
     #         )
     #         as sale_variants ON #{Spree::Product.table_name}.id = sale_variants.product_id")
+  end
+
+  add_search_scope :ascend_by_master_price do
+    scope = Spree::Product.sale_price_arel
+    joins(:master => :default_price).
+        joins("LEFT JOIN (#{scope.to_sql}) AS m_price ON m_price.id = #{Spree::Price.table_name}.id")
+        .order("m_price.merge_case ASC")
+  end
+
+  add_search_scope :descend_by_master_price do
+    scope = Spree::Product.sale_price_arel
+    joins(:master => :default_price).
+        joins("LEFT JOIN (#{scope.to_sql}) AS m_price ON m_price.id = #{Spree::Price.table_name}.id")
+        .order("m_price.merge_case DESC")
   end
 
   # add sorting scope
@@ -48,5 +62,13 @@ Spree::Product.class_eval do
       variants.each { |v| block.call v }
     end
     block.call master
+  end
+
+  def self.sale_price_arel
+    price = Spree::Price.arel_table
+    sale_price = Spree::SalePrice.arel_table
+    sale_price = sale_price.where(sale_price[:enabled].eq(true)).where(sale_price[:start_at].lteq(Time.now).or(sale_price[:start_at].eq(nil))).project('*').as('sale_price_join')
+    merge_case = Arel::Nodes::SqlLiteral.new("CASE WHEN value IS NULL THEN amount ELSE value END")
+    return price.join(sale_price, Arel::Nodes::OuterJoin).on(price[:id].eq(sale_price[:price_id])).project(merge_case.as('merge_case')).project(price[:id].as('id'))
   end
 end
