@@ -29,6 +29,18 @@ Spree::Product.class_eval do
     run_on_variants(all_variants) { |v| v.stop_sale }
   end
 
+  add_search_scope :on_sale_items do
+    joins(:master => :default_price).
+    joins("INNER JOIN #{Spree::SalePrice.table_name} ON #{Spree::Price.table_name}.id = #{Spree::SalePrice.table_name}.price_id")
+    # joins(:prices, :sale_prices).merge(Spree::SalePrice.active)
+    # joins("INNER JOIN (
+    #           #{Spree::Variant.joins(:prices, :sale_prices).merge(Spree::SalePrice.active).to_sql}
+    #         )
+    #         as sale_variants ON #{Spree::Product.table_name}.id = sale_variants.product_id")
+  end
+
+  # add sorting scope
+
   private
 
   def run_on_variants(all_variants, &block)

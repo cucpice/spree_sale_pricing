@@ -58,8 +58,8 @@ module Spree
       def sale_price_params
         p = params.require(:sale_price).permit(:id, :value, :start_at, :end_at, :enabled)
         #  normalize param
-        p[:start_at] = DateTime.strptime(p[:start_at], date_time_format)
-        p[:end_at] = DateTime.strptime(p[:end_at], date_time_format)
+        p[:start_at] = Time.zone.parse(p[:start_at])
+        p[:end_at] = Time.zone.parse(p[:end_at])
         p
       end
 
