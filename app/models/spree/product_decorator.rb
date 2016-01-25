@@ -29,6 +29,15 @@ Spree::Product.class_eval do
     run_on_variants(all_variants) { |v| v.stop_sale }
   end
 
+  def active_sales_count(currency = Spree::Config[:currency])
+    Spree::SalePrice.active.
+        joins(:original_price).
+        joins("INNER JOIN #{Spree::Variant.table_name} ON #{Spree::Variant.table_name}.id = #{Spree::Price.table_name}.variant_id").
+        where("#{Spree::Price.table_name}.currency = ?", currency).
+        where("spree_variants.product_id = ?", self.id).
+        count
+  end
+
   add_search_scope :on_sale_items do
     joins(:master => :default_price).
     joins("INNER JOIN (#{Spree::SalePrice.active.to_sql}) sale_prices ON #{Spree::Price.table_name}.id = sale_prices.price_id")
