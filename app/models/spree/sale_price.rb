@@ -2,10 +2,13 @@ module Spree
   class SalePrice < ActiveRecord::Base
     # TODO validations
     belongs_to :price, :class_name => "Spree::Price"
+    belongs_to :original_price, :class_name => "Spree::Price", foreign_key: 'price_id'
     has_one :calculator, :class_name => "Spree::Calculator", :as => :calculable, :dependent => :destroy
     accepts_nested_attributes_for :calculator
     validates :calculator, :presence => true
     validates :value, presence: true, numericality: {greater_than_or_equal_to: 0}
+
+    after_commit :touch_price
 
     extend DisplayMoney
     money_methods :price
@@ -56,5 +59,13 @@ module Spree
     def stop
       update_attributes({ end_at: Time.now, enabled: false })
     end
+
+    private
+      def touch_price
+        price = original_price
+        if price
+          price.touch
+        end
+      end
   end
 end

@@ -55,6 +55,14 @@ Spree::Product.class_eval do
 
   # add sorting scope
 
+  # Override default spree_intaxon product query to not having order
+  # This allow product to be ordered as user choose
+  Spree::Product.add_search_scope :in_taxon do |taxon|
+    includes(:classifications).
+        where("spree_products_taxons.taxon_id" => taxon.self_and_descendants.pluck(:id))
+    # .order("spree_products_taxons.position ASC")
+  end
+
   private
 
   def run_on_variants(all_variants, &block)
@@ -67,7 +75,13 @@ Spree::Product.class_eval do
   def self.sale_price_arel
     price = Spree::Price.arel_table
     sale_price = Spree::SalePrice.arel_table
-    sale_price = sale_price.where(sale_price[:enabled].eq(true)).where(sale_price[:start_at].lteq(Time.now).or(sale_price[:start_at].eq(nil))).project('*').as('sale_price_join')
+    sale_price = sale_price.where(sale_price[:enabled].eq(true)).
+                            where(sale_price[:start_at].lteq(Time.now).
+                                       or(sale_price[:start_at].eq(nil))).
+                            where(sale_price[:end_at].gteq(Time.now).
+                                       or(sale_price[:end_at].eq(nil))).
+                            project(sale_price[:price_id]).project(sale_price[:value].minimum.as('value')).
+                            group(sale_price[:price_id]).as('sale_price_join')
     merge_case = Arel::Nodes::SqlLiteral.new("CASE WHEN value IS NULL THEN amount ELSE value END")
     return price.join(sale_price, Arel::Nodes::OuterJoin).on(price[:id].eq(sale_price[:price_id])).project(merge_case.as('merge_case')).project(price[:id].as('id'))
   end
