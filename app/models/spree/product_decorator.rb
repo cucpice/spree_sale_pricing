@@ -38,9 +38,14 @@ Spree::Product.class_eval do
         count
   end
 
+  # add sorting scope
+  scope :last_updated, -> {order(updated_at: :desc)}
+
   add_search_scope :on_sale_items do
     joins(:master => :default_price).
-    joins("INNER JOIN (#{Spree::SalePrice.active.to_sql}) sale_prices ON #{Spree::Price.table_name}.id = sale_prices.price_id")
+        joins("INNER JOIN (
+            #{Spree::SalePrice.active.select('distinct price_id').to_sql}
+          ) sale_prices ON #{Spree::Price.table_name}.id = sale_prices.price_id")
     # joins(:prices, :sale_prices).merge(Spree::SalePrice.active)
     # joins("INNER JOIN (
     #           #{Spree::Variant.joins(:prices, :sale_prices).merge(Spree::SalePrice.active).to_sql}
