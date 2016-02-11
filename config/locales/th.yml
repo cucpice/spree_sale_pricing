@@ -8,6 +8,7 @@ th:
   sale_price_end_at: "ลดราคาสิ้นสุดเมื่อ"
   sale_price_enabled: "มีผลอยู่"
   until: "จนถึง"
+  until_nil: 'ไม่มีกำหนด'
   spree:
     percent_per_item_msrp: "Percent per item MSRP"
   time:

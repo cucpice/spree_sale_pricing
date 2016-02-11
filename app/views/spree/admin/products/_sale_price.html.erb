@@ -5,7 +5,8 @@
         <%= f.label :sale_price, t(:sale_price) %>
         <%= f.text_field :sale_price, :value => "#{@product.sale_price}", :disabled => true %>
         <%= f.error_message_on :sale_price %>
-        <p>(<%=t(:until) %> <%=l(@product.master.default_price.active_sale.end_at, format: :long) %>)</p>
+
+        <p>(<%=t(:until) %> <%=@product.master.default_price.active_sale.end_at.nil? ? t(:until_nil) : l(@product.master.default_price.active_sale.end_at, format: :long) %>)</p>
     <% end %>
     <% end %>
     <%= link_to t(:manage_sale_prices), admin_product_sale_prices_path(@product), class: 'button' %>

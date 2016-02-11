@@ -9,6 +9,8 @@ en:
   sale_price_start_at: "Sale Start Date"
   sale_price_end_at: "Sale End Date"
   sale_price_enabled: "Enabled"
+  until: "Until"
+  until_nil: 'Forever'
   spree:
     percent_per_item_msrp: "Percent per item MSRP"
   time:
